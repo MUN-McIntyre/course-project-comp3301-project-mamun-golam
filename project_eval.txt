@@ -1,0 +1,14 @@
+Grading		
+Description Section	3	/3
+Reference Section	3	/3
+Implementation Section	3	/3
+Contributions	1	/1
+Total:	10	/10
+		
+Comments:		
+Sounds good!		
+
+You can likely find a training set of images for the ML algorithm.		
+Use your own test set though -- maybe some are drawings, some are computer generated circles, etc.		
+
+You may want to use the second floor CS labs to do some of this work.		
