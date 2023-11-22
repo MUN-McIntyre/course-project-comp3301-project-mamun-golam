@@ -1,0 +1,7 @@
+Statistics for 1000 images:
+IoU represents the success rate for how accurate the detected circle is, with 1 being complete overlap and 0 being no detection.
+
+Average IoU (CNN): 0.857506411101589
+Average IoU (Hough): 0.7347756299833055
+Average Execution Time (CNN): 0.07321995139122009 seconds
+Average Execution Time (Hough): 0.009092290878295899 seconds
