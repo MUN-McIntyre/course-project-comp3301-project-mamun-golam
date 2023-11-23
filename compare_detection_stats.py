@@ -10,6 +10,12 @@ from create_circles import draw_circle
 
 
 def get_stats(no_of_images):
+    """
+    Generates images and runs both CNN and Hough on it to compare the accuracy rate and execution time. Prints iut the stats.
+
+    Args:
+        no_of_images (int): Number of images to generate.
+    """
 
     cnn_results = []
     hough_results = []
