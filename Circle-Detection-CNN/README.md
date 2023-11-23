@@ -1,5 +1,5 @@
 # Cirlcle-Detection-DNN
-This is a PyTorch implementation of a Deep Convolutional Neural Network model for detecting the parameters of a circle presents inside a given image under the presence of noise. 
+This is a PyTorch implementation of a Deep Convolutional Neural Network model for detecting the parameters of a circle present inside a given image of 200x200 pixels under the presence of random noise and blurriness. 
 
 Note: This implementation is using Multi-GPUs for faster training. You can modify train.py to avoid using GPUs.
 
@@ -8,21 +8,8 @@ Note: This implementation is using Multi-GPUs for faster training. You can modif
 
 ![Repo List](screenshot/Network.jpg)
 
-The output of the network is 3 real numbers which represents the detected row, column, and radious of the circle in the noisy image. 
+The output of the network is 3 real numbers which represents the detected row, column, and radious of the circle in the noisy image, it also creates a red detected circle on top of the image. 
 
-# Getting Started
-
-**Installation**
-- Clone this repo:
-```shell
-git clone https://github.com/hsouri/Cirlcle-Detection-CNN
-```
-
-- Requirements
-Install the dependencies by running the following command:
-```shell
-pip install -r requirements.txt
-```
 
 # Model training
 - Data set making
@@ -31,7 +18,7 @@ Before trainig, train set should be created by the following command:
 ```shell
 python dataset.py
 ```
-This will generate 200,000 images with randon level of noise between 0.035 and 3.5. You can create yout own train set with arbitrary number of imaages and arbitrary level of noise by changing number of images and level of noise in the train_set() function.
+This will generate 1000 images with randon level of noise and blur. You can create your own train set with arbitrary number of images and arbitrary level of noise and blur by changing number of images and salt and pepper probalility of noise, and the kernel size of blur in the noisy_circle() function.
 
 - Training:
 
@@ -59,12 +46,7 @@ and continue training from a checkpoint. List of selectable attributes:
 
 # Model Testing
 
-You can test your model on 1000 random images with level noise of 2 by running the fowwloing command:
-
-```shell
-python validation.py
-``` 
-By default validation is using the my pretrained model. If you're willing to test your own model you must change the checkpoint in the find_circle() function. 
+You can test your model on a random image using the find_circle_cnn(img, filename, dir) function in validation.py. Run the find_circle_cnn(img, filename, dir) function with the image array as the img parameter and the filename save directory of the output detected image.
 
 
 # Traing Loss
@@ -72,10 +54,8 @@ Losses for trainig the model will be saved in the `out.txt` file. Trinig loss of
 ![Training Loss](screenshot/loss.png)
 
 
-# Validation Scores
+# Thanks to https://github.com/hsouri for the source code of this CNN.
 
-Validation scores using the metric AP 0.7 are as follows:
-
-![validation scores](screenshot/scores.png)
+The original repository can be found here: https://github.com/hsouri/Circle-Detection-CNN
 
 
