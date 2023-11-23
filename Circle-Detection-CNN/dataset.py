@@ -31,13 +31,11 @@ def noisy_circle(size, radius):
     rad = np.random.randint(1, max(1, radius))
     cv2.circle(img, (col, row), rad, 0, thickness=np.random.randint(1, 5))
 
-    # Noise
-    # CHANGED NOISE BE 0 AT MIN INSTEAD OF 0.01
-    # ADD NOISE RANDOMLY
+    # Add noise randomly to some of the images
     if np.random.randint(1, 4) == 1:
         img = add_salt_and_pepper_noise(img, salt_prob=0.02, pepper_prob=0.02)
 
-    # ADD BLUR RANDOMLY
+    # Add blur randomly to some of the images
     if np.random.randint(1, 4) == 1:
         kernel_size = random.randrange(1, 8, 2)
         img = cv2.blur(img, (kernel_size, kernel_size))
@@ -48,7 +46,6 @@ def noisy_circle(size, radius):
 def train_set():
     # TRAIN 1000 INSTEAD OF 200000
     number_of_images = 10000
-    # CHANGE TO 2 INSR+TEAD OF 3.5
 
     with open("train_set.csv", 'w', newline='') as outFile:
         header = ['NAME', 'ROW', 'COL', 'RAD']
