@@ -1,6 +1,7 @@
 import sys
 import time
 import numpy as np
+import csv
 
 sys.path.append('Hough_Circle_Detection')
 sys.path.append('Circle-Detection-CNN')
@@ -27,13 +28,13 @@ def get_stats(no_of_images):
 
         # Measure execution time for find_circle_hough
         start_time = time.time()
-        hough_detect = find_circle_hough(img, i)
+        hough_detect = find_circle_hough(img, i, 'test')
         hough_execution_time = time.time() - start_time
         total_hough_time += hough_execution_time
 
         # Measure execution time for find_circle_cnn
         start_time = time.time()
-        cnn_detect = find_circle_cnn(img, i)
+        cnn_detect = find_circle_cnn(img, i, 'test')
         cnn_execution_time = time.time() - start_time
         total_cnn_time += cnn_execution_time
 
@@ -46,10 +47,18 @@ def get_stats(no_of_images):
             result_hough = iou(params, hough_detect)
         else:
             result_hough = 0
-
         
         cnn_results.append(result_cnn)
         hough_results.append(result_hough)
+
+    # Write detection iou and time for each image to csv
+    with open('results_csv.csv', mode='w', newline='') as csv_file:
+            csv_writer = csv.writer(csv_file)
+            header = ['Image', 'CNN IoU', 'Hough IoU']
+            csv_writer.writerow(header)
+
+            for i in range(len(cnn_results)):
+                csv_writer.writerow([i, cnn_results[i], hough_results[i]])
 
     average_cnn_time = total_cnn_time / no_of_images
     average_hough_time = total_hough_time / no_of_images
