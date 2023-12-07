@@ -6,10 +6,10 @@ This repository compares the Deep Convolutional Neural Network and Hough Circles
 ## Statistics on 1000 images
 
 ```
-Average IoU (CNN): 0.857506411101589
-Average IoU (Hough): 0.7347756299833055
-Average Execution Time (CNN): 0.07321995139122009 seconds
-Average Execution Time (Hough): 0.009092290878295899 seconds
+Average IoU (CNN): 0.8616750749654489
+Average IoU (Hough): 0.7195148291577159
+Average Execution Time (CNN): 0.0707612841129303 seconds
+Average Execution Time (Hough): 0.007999287843704224 seconds
 ```
 
 
