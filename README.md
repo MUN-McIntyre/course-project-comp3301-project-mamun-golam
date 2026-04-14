@@ -1,72 +1,161 @@
-# CNN vs Hough Circle Detection Comparison
+# Circle Detection: CNN vs Hough Transform
 
-This repository compares the Deep Convolutional Neural Network and Hough Circles when it comes to Circle detection. This repository contains statistics on a test conducted on 1000 images when varying levels of noise and blur. CNN and Hough were both used to detect the circles in these 1000 images and the resulting pictures can be found in the folder called *test*. The statistics of these tests, containing the average success rate of each algorithm and the average execution time is contained in the file named *stats.txt*.
+This project compares a **Deep Convolutional Neural Network (CNN)** and a **classical Hough Circle Transform** for detecting circles in noisy images. The goal is to evaluate the trade-offs between **accuracy, robustness, and execution speed** across both approaches.
+
+---
+
+## 📌 Problem
+
+Circle detection is a common task in computer vision with applications in medical imaging, industrial inspection, and object recognition. Traditional methods like the Hough Transform work well under ideal conditions but struggle with noise and distortions.
+
+This project explores:
+- Can a CNN outperform classical methods under noisy conditions?
+- What are the trade-offs between accuracy and speed?
+
+---
+
+## 🧠 Approach Overview
+
+Two approaches are implemented and compared:
+
+- **CNN-based detection**
+  - Learns to predict circle parameters (center + radius)
+  - Trained on synthetic noisy images
+
+- **Hough Circle Transform**
+  - Uses edge detection + parameter voting
+  - No training required
+
+---
+
+## 🤖 CNN Model
+
+The CNN model predicts three values:
+- Row (y-coordinate of center)
+- Column (x-coordinate of center)
+- Radius of the circle
+
+### Features:
+- Trained on synthetically generated data
+- Handles noise and blur effectively
+- Outputs continuous values for precise detection
+
+### Network Architecture
+
+![Network](Circle-Detection-CNN/screenshot/Network.jpg)
+
+---
+
+## 📐 Hough Circle Detection
+
+The Hough Transform approach:
+1. Applies Gaussian blur to reduce noise
+2. Uses Canny edge detection
+3. Applies Hough Circle Transform to detect circles
+
+### Characteristics:
+- Fast and efficient
+- No training required
+- Sensitive to noise and parameter tuning
+
+---
+
+## ⚖️ Comparison Experiment
+
+A controlled experiment was conducted using:
+- **1000 synthetic images**
+- Randomly generated circles
+- Varying levels of:
+  - Noise (salt & pepper)
+  - Blur
+
+### Evaluation Metrics:
+- **Intersection over Union (IoU)** → accuracy
+- **Execution time** → performance
+
+---
+
+## 📊 Results
+### All the data are presented in the ```Report.pdf``` file.
+
+Average IoU (CNN): 0.8617
+Average IoU (Hough): 0.7195
+Average Execution Time (CNN): 0.0707 seconds
+Average Execution Time (Hough): 0.0080 seconds
 
 
-## Statistics on 1000 images
+### Summary
 
-```
-Average IoU (CNN): 0.8616750749654489
-Average IoU (Hough): 0.7195148291577159
-Average Execution Time (CNN): 0.0707612841129303 seconds
-Average Execution Time (Hough): 0.007999287843704224 seconds
-```
+| Feature            | CNN                     | Hough Transform        |
+|------------------|------------------------|------------------------|
+| Accuracy (IoU)    | High (0.86)            | Moderate (0.72)        |
+| Speed             | Slower                 | Faster                 |
+| Robust to Noise   | Strong                 | Weak                   |
+| Training Required | Yes                    | No                     |
 
+---
 
-## Installation
+## 📸 Sample Outputs
 
-Clone the repository:
+### Training Loss
+<img src="Circle-Detection-CNN/screenshot/loss.png" width="500"/>
 
-```bash
-git clone https://github.com/MUN-McIntyre/course-project-comp3301-project-mamun-golam.git
-cd circle-detection-cnn
-```
+### Example Detection Outputs
+- Results are saved in:
+  - `test/` → synthetic data
+  - `real_test/` → real-world images
 
-Install the required dependencies:
+---
 
-```bash
-pip install -r requirements.txt
-```
+## 🔄 Workflow
 
+1. Generate dataset → `dataset.py`  
+2. Train CNN model → `train.py`  
+3. Validate model → `validation.py`  
+4. Compare with Hough → `compare_detection_stats.py`  
+5. Test on real images → `detecting_real_circles.py`  
 
-## compare_detection_stats.py
-
-This code generates 1000 random test images, with varying levels of noise and blur, and run both CNN and Hough Circle Detection on the test images. It calculates the success rate of each algorithm using Intersection over Union for "success" rate and the execution time. And finally it prints out the average IoU and execution time for both algorithms.
-
-- To run this code, run the following in terminal (make sure there is a folder named 'test' main directory):
-
-```bash
-python compare_detection.py
-```
-
-- To change the number of images used in comparison, change the get_stats(no_of_images) parameter in the main() function of the code.
+---
 
 
-## detecting_real_circles.py
+## ▶️ How to Run
 
-This code used to run and visualize the comparison between both algorithms on real life circle examples. It loops thourgh a folder containing real circle images ('real_test' in this case). It runs both CNN and Hough Circle Detection on the images in this folder, and saves the new image with the red detected circle on top of the original image in the same folder with a name with the format *imagename_algorithm_detected.jpg*.
+1. Install dependencies
 
-- To run this code, run the following in terminal:
+    pip install -r requirements.txt
 
-```bash
-python detecting_real_circles.py
-```
+2. Generate dataset
 
-- To change the folder where your real images are saved, change the parameter to find_real_circle('real_test') to a path to the folder you want.
+    python dataset.py
+
+3. Train CNN model
+
+    python train.py
+
+4. Run comparison experiment
+
+    python compare_detection_stats.py
+
+5. Test on real images
+
+    python detecting_real_circles.py
+
+---
 
 
-## detecting_real_circles.py
+## 📏 Evaluation Metric
 
-This code is used generate a circle on a 200x200 grayscale image using CV2 and add random noise and blurriness to the image. It takes a filename for the output image and saves the image in the *test* folder. It returns the center and radius of the circle and the img list itself, in the format: (col, row, rad), img.
+Intersection over Union (IoU) measures how well the predicted circle overlaps with the ground truth.
 
-- The draw_circle(filename) function in this code is used to genereate images for testing in the compare_detection_stats.py code.
-
-
-## test
-
-This folder contains the images that were used to compare statistics for both algorithms.
+IoU = Area of Overlap / Area of Union
+Higher IoU → better detection accuracy
 
 
-## real_test
+## 💡 Key Insights
 
-This folder contains a few examples of the circle examples in real life and contains how both algorithms worked on these images.
+CNN significantly outperforms Hough Transform in noisy environments
+Hough Transform is faster but less reliable under distortions
+Deep learning models are more adaptable to real-world conditions
+Trade-off exists between accuracy vs speed
+
+
